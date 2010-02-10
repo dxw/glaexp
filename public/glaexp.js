@@ -19,10 +19,10 @@ jQuery(document).ready(function($){
       ques.after('<input type="submit" class="submit">');
       $('form h1 input[type="submit"]').val(ques.html());
       ques.remove();
-    }
 
-    // Select-all
-    $(this).select();
+      // Select-all (only the first time - otherwise it might be annoying)
+      $(this).select();
+    }
   });
 
   amount_input.mouseup(function(){
