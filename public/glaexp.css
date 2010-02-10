@@ -16,3 +16,7 @@ h1 input {
 h1 input.text {
   width: 6em;
 }
+
+hr {
+  margin-top: 3em;
+}
