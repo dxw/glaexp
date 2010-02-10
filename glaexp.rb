@@ -99,6 +99,9 @@ HERE
     doc << render_expenditure(highfive)
   end
 
+  doc << '<address>Made in an afternoon by <a href="mailto:tom@thedextrousweb.com">Tom Adams</a> (<a href="http://twitter.com/holizz">@holizz</a> at <a href="http://thedextrousweb.com/">The Dextrous Web</a> using <a href="http://www.sinatrarb.com/">Sinatra</a>.</address>'
+  doc << %q&<p class="citation">Data taken from London's Datastore: <a href="http://data.london.gov.uk/datastore/package/expenditure-over-£1000">Expenditure over £1000</a></p>&
+
   doc << '<script src="jquery-1.4.1.min.js"></script>'
   doc << '<script src="glaexp.js"></script>'
 
