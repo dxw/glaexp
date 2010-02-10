@@ -99,6 +99,8 @@ HERE
     doc << render_expenditure(highfive)
   end
 
+  doc << %Q'<form><p><input type="text" name="q" value="#{amount[2..1]}"><input type="submit" value="What can I buy?"></p></form>'
+
   doc << '<hr>'
   doc << '<p><strong>What is this?</strong> This site lets you find out what the Greater London Authority bought with particular amounts of money.</p>'
   doc << '<address>Made in an afternoon by <a href="mailto:tom@thedextrousweb.com">Tom Adams</a> (<a href="http://twitter.com/holizz">@holizz</a>) at <a href="http://thedextrousweb.com/">The Dextrous Web</a> using <a href="http://www.sinatrarb.com/">Sinatra</a>.</address>'
