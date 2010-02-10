@@ -29,7 +29,7 @@ end
 
 def pretty_amount(amount)
   one, two = ("%.02f" % (amount.to_i / 100.0)).match(/^(\d+)(\.\d\d)$/)[1..2]
-  '£' + one.reverse.gsub(/(...)/,'\1,').reverse + two
+  '£' + one.reverse.gsub(/(...)/,'\1,').sub(/,$/,'').reverse + two
 end
 
 def render_expenditure(results)
