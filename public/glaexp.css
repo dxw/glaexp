@@ -8,3 +8,11 @@ h1 {
   padding-top: 1em;
   padding-bottom: 2em;
 }
+
+h1 input {
+  font-size: 100%;
+}
+
+h1 input.text {
+  width: 5.5em;
+}
