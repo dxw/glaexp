@@ -77,14 +77,27 @@ HERE
   highfive = conn.exec('SELECT * FROM expenditure WHERE amount > %d ORDER BY amount ASC LIMIT 5' % raw_amount);
   lowfive = conn.exec('SELECT * FROM expenditure WHERE amount < %d ORDER BY amount DESC LIMIT 5' % raw_amount);
 
-  doc << "<h2>Things costing exactly #{amount}</h2>"
-  doc << render_expenditure(exact)
+  if exact.to_a.empty?
+    moreorless = highfive.to_a.empty? ? 'less' : 'more'
+    doc << "<h2>Nothing costs exactly #{amount}. Why not spend a little #{moreorless}?</h2>"
+  else
+    doc << "<h2>Things costing exactly #{amount}</h2>"
+    doc << render_expenditure(exact)
+  end
 
-  doc << "<h2>Things costing just under #{amount}</h2>"
-  doc << render_expenditure(lowfive)
+  if lowfive.to_a.empty?
+    doc << "<h2>This must be the cheapest thing ever at #{amount}</h2>"
+  else
+    doc << "<h2>Things costing just under #{amount}</h2>"
+    doc << render_expenditure(lowfive)
+  end
 
-  doc << "<h2>Things costing just over #{amount}</h2>"
-  doc << render_expenditure(highfive)
+  if highfive.to_a.empty?
+    doc << "<h2>You must have a huge budget! Nothing costs more than #{amount}</h2>"
+  else
+    doc << "<h2>Things costing just over #{amount}</h2>"
+    doc << render_expenditure(highfive)
+  end
 
   doc << '<script src="jquery-1.4.1.min.js"></script>'
   doc << '<script src="glaexp.js"></script>'
