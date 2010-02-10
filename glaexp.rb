@@ -28,7 +28,8 @@ def month(n)
 end
 
 def pretty_amount(amount)
-  "£%.02f" % (amount.to_i / 100.0)
+  one, two = ("%.02f" % (amount.to_i / 100.0)).match(/^(\d+)(\.\d\d)$/)[1..2]
+  '£' + one.reverse.gsub(/(...)/,'\1,').reverse + two
 end
 
 def render_expenditure(results)
@@ -60,7 +61,7 @@ get '/' do
     min = 15817263
     raw_amount = rand(max-min).to_i - min
   else
-    raw_amount = (params[:q].to_f * 100).to_i
+    raw_amount = (params[:q].gsub(',','').to_f * 100).to_i
   end
   amount = pretty_amount(raw_amount)
 
