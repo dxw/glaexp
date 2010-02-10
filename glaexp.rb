@@ -24,14 +24,31 @@ end
 # Helpers
 
 def month(n)
-  %w[January February March April May June July August September October November December][n-1]
+  %w[January February March April May June July August September October November December][n.to_i-1]
+end
+
+def pretty_amount(amount)
+  "£%.02f" % (amount.to_i / 100.0)
 end
 
 def render_expenditure(results)
-  s = ''
+  s = '<ul>'
   results.each do |row|
-    s << "<p>%s</p>" % row.inspect
+
+    values = [pretty_amount(row['amount']), row['expense'], month(row['month']), row['year'], row['supplier']]
+    values.map!{|v|CGI.escapeHTML v}
+    s << '<li class="expenditure">'
+    s << %Q&<span class="amount">%s</span> was spent on <span class="description">%s</span> during <span class="month">%s</span> <span class="year">%d</span>. The supplier was <span class="supplier">%s</span>.& % values
+
+    unless row['doctype'].nil? or row['docno'].nil? or row['date'].nil?
+      val = [row['doctype'], row['docno'], row['date']]
+      val.map!{|v|CGI.escapeHTML v}
+      s << %Q& Some additional information: document type <span class="doctype">%s</span>, document number <span class="docno">%s</span>, date <span class="fulldate">%s<span>.& % val
+    end
+
+    s << '</li>'
   end
+  s << '</ul>'
   s
 end
 
@@ -45,7 +62,7 @@ get '/' do
   else
     raw_amount = (params[:q].to_f * 100).to_i
   end
-  amount = "£%.02f" % (raw_amount / 100.0)
+  amount = pretty_amount(raw_amount)
 
   title = "What can you buy with #{amount}?"
   doc = <<HERE
