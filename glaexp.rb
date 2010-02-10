@@ -67,8 +67,9 @@ get '/' do
   title = "What can you buy with #{amount}?"
   doc = <<HERE
 <!DOCTYPE html>
+<link rel="stylesheet" href="glaexp.css">
 <title>#{title}</title>
-<h1>#{title}</h1>
+<h1>What can you buy with £<span class="titular_amount">#{amount[2..-1]}</span><span class="titular_ques">?</span></h1>
 HERE
 
   exact = conn.exec('SELECT * FROM expenditure WHERE amount = %d' % raw_amount);
@@ -83,6 +84,9 @@ HERE
 
   doc << "<h2>Things costing just over #{amount}</h2>"
   doc << render_expenditure(highfive)
+
+  doc << '<script src="jquery-1.4.1.min.js"></script>'
+  doc << '<script src="glaexp.js"></script>'
 
   doc
 end
